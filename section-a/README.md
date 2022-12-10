@@ -2,7 +2,7 @@
 
 ### Correctness
 
-I'm not sure if you attempted to test or execute your solution, but when I tried I got the following error messages:
+I'm not sure if you attempted to test or execute your solution, but when I tried I got the following error message:
 
 ```bash
 🕙 2022-12-08 10:48:47  ❯ python anagram.py
@@ -12,9 +12,9 @@ I'm not sure if you attempted to test or execute your solution, but when I tried
 IndentationError: unindent does not match any outer indentation level
 ```
 
-Python is a whitespace sensitive language, so it's import to make sure that you [indent consistently] throughout your program.
+Python is a whitespace sensitive language, so it's important to make sure that you [indent consistently] throughout your program.
 
-I made the following change to your code:
+I made the following change on L2 of your code:
 
 ```bash
 🕙 2022-12-08 14:16:02  ❯ diff anagram.py corrected-anagram.py
@@ -36,9 +36,9 @@ Traceback (most recent call last):
 TypeError: sorted expected 1 argument, got 0
 ```
 
-The error message is telling us that the `sorted` function takes one argument, but you didn't provide one in your code (on L5).
+The error message is telling us that the <code>[sorted]</code> function takes one argument, but you didn't provide one in your code (on L5).
 
-Let's presume that you intended to sort the current list item that you're iterating through:
+Let's presume that you intended to sort the current item `i`  of the list `strs` that you're iterating through:
 
 ```diff
 🕙 2022-12-08 14:17:42  ✖  diff anagram.py corrected-anagram.py
@@ -65,15 +65,15 @@ The key takeaway should be that you should always execute your solution and try 
 
 ### Documentation
 
-Your solution is missing [comments or docstrings], which are useful ways of capturing your thinking and purpose of your classes, functions and specific lines of code.
+Your solution is missing [comments or docstrings], which are useful ways of capturing your thinking and the purpose of your classes, functions and blocks  of code.
 
 ### Efficiency
 
-Your implementation is reasonably efficient, you're only looping through the input list once, which is good news for the [time complexity] of your function.
+Your implementation is reasonably efficient, since you're only looping through the input list once, which is good news for the [time complexity] of your function.
 
 ### Style
 
-The accepted conventions for Python code formatting are documented in [PEP8], so please ensure that your Python solutions conform to this best practice.
+The accepted conventions for Python code formatting are documented in [PEP8], so please ensure that your Python solutions conform to these best practice.
 
 ## Section A: Code Review (Java)
 
@@ -144,6 +144,7 @@ Fibonacci Series of 10 numbers:0 1 1 2 3 5 8 13 21 34
 
 
 [indent consistently]: https://peps.python.org/pep-0008/#indentation
+[sorted]: https://docs.python.org/3/library/functions.html#sorted
 [comments or docstrings]: https://peps.python.org/pep-0008/#comments
 [time complexity]: https://en.wikipedia.org/wiki/Time_complexity
 [PEP8]: https://peps.python.org/pep-0008/
