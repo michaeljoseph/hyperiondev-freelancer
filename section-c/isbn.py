@@ -79,6 +79,7 @@ def isbn13(candidate: str):
 test_cases = [
     ("031606652X", "Invalid"),
     ("9780316066525", "Valid"),
+    ("9780345453747", "Valid"),
     ("9783876155237", "Invalid"),
 ]
 
