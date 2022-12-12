@@ -64,6 +64,7 @@ import pytest
 
 test_cases = [
     ("031606652X", "Invalid"),
+    ("9780316066525", "Valid"),
 ]
 
 
