@@ -73,7 +73,7 @@ def is_valid_isbn10(candidate: str, multiplier) -> bool:
         total += int(digit) * multiplier(index)
 
     # valid if cleanly divisible by 10
-    return total % 10 == 0
+    return total % 11 == 0
 
 
 
