@@ -57,10 +57,21 @@ Create a function that takes a string of numbers (possibly with an X at the end)
 import pytest
 
 
-def isbn13(candidate):
+def isbn13(candidate: str):
     """Validate an isbn-10 or isbn-13 number"""
     if len(candidate) == 13:
-        return "Valid"
+        # initialise digit sum counter
+        total = 0
+
+        # loop through the isbn digits
+        for index, digit in enumerate(candidate):
+            # the multiplier alternates between 1 and 3
+            multiplier = 1 if index % 2 == 0 else 3
+            # digit is a string, so convert to a number before multplying
+            total += int(digit) * multiplier
+
+        # valid if cleanly divisible by 10
+        return "Valid" if total % 10 == 0 else "Invalid"
 
     return "Invalid"
 
