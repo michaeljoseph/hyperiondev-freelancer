@@ -54,13 +54,16 @@ Create a function that takes a string of numbers (possibly with an X at the end)
 - Return "Valid" if it is a valid ISBN-13.
 - If it is a valid ISBN-10, convert it into an ISBN-13 and return the ISBN-13 number.
 """
+import pytest
+
 
 def isbn13(candidate):
     """Validate an isbn-10 or isbn-13 number"""
+    if len(candidate) == 13:
+        return "Valid"
+
     return "Invalid"
 
-
-import pytest
 
 test_cases = [
     ("031606652X", "Invalid"),
