@@ -60,12 +60,9 @@ def is_valid_isbn10(candidate: str) -> bool:
     return False
 
 
-def is_valid_isbn13(candidate: str) -> bool:
+def is_valid_isbn13(candidate: str, multiplier) -> bool:
     # initialise digit sum counter
     total = 0
-
-    # the multiplier alternates between 1 and 3
-    multiplier = lambda index: 1 if index % 2 == 0 else 3
 
     # loop through the isbn digits
     for index, digit in enumerate(candidate):
@@ -79,7 +76,10 @@ def is_valid_isbn13(candidate: str) -> bool:
 def isbn13(candidate: str):
     """Validate an isbn-10 or isbn-13 number"""
     if len(candidate) == 13:
-        return "Valid" if is_valid_isbn13(candidate) else "Invalid"
+        # the multiplier alternates between 1 and 3
+        multiplier = lambda index: 1 if index % 2 == 0 else 3
+
+        return "Valid" if is_valid_isbn13(candidate, multiplier) else "Invalid"
     elif len(candidate) == 10:
         return "Valid" if is_valid_isbn10(candidate) else "Invalid"
     else:
