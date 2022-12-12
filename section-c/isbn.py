@@ -61,22 +61,11 @@ def isbn13(candidate):
 
 import pytest
 
-@pytest.fixture
-def isbn_examples():
-    return [
-#         # ("031606652X", "Invalid"),
-#         # ("0330301824", "Invalid"),
-#         # ("0345453747", "Invalid"),
-#         # ("9780316066525", "Valid"),
-#         # ("9783866155237", "Valid"),
-#         # ("9780345453747", "Valid"),
-#         # ("9783876155237", "Invalid"),
-#         # ("0316066524", "9780316066525"),
-#         # ("3866155239", "9783866155237"),
-#         # ("817450494X", "9788174504944"),
-    ]
+test_cases = [
+    ("031606652X", "Invalid"),
+]
 
 
-@pytest.mark.paramatrize("isbn, expected", isbn_examples)
+@pytest.mark.parametrize("isbn, expected", test_cases)
 def test_isbn_validation(isbn, expected):
     assert isbn13(isbn) == expected
