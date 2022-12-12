@@ -56,7 +56,11 @@ Create a function that takes a string of numbers (possibly with an X at the end)
 """
 import pytest
 
-def is_valid_isbn10(candidate: str, multiplier) -> bool:
+ISBN_10_MULTIPLIER = lambda index: 10 - index
+ISBN_13_MULTIPLIER = lambda index: 1 if index % 2 == 0 else 3
+
+
+def is_valid_isbn10(candidate: str, multiplier = ISBN_10_MULTIPLIER) -> bool:
     # initialise digit sum counter
     total = 0
 
@@ -77,7 +81,7 @@ def is_valid_isbn10(candidate: str, multiplier) -> bool:
 
 
 
-def is_valid_isbn13(candidate: str, multiplier) -> bool:
+def is_valid_isbn13(candidate: str, multiplier = ISBN_13_MULTIPLIER) -> bool:
     # initialise digit sum counter
     total = 0
 
@@ -91,7 +95,14 @@ def is_valid_isbn13(candidate: str, multiplier) -> bool:
 
 
 def convert_isbn10(isbn10: str) -> str:
-    return f"987{isbn10}"
+    isbn13 = f"978{isbn10}"
+    isbn12 = isbn13[:-1]
+    for check_digit in range(1, 9):
+        isbn13 = f"{isbn12}{check_digit}"
+        if is_valid_isbn13(isbn13):
+            return isbn13
+
+    raise Exception(f"Check digit not found for {isbn13}")
 
 
 def isbn(candidate: str):
