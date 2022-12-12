@@ -64,12 +64,13 @@ def is_valid_isbn13(candidate: str) -> bool:
     # initialise digit sum counter
     total = 0
 
+    # the multiplier alternates between 1 and 3
+    multiplier = lambda index: 1 if index % 2 == 0 else 3
+
     # loop through the isbn digits
     for index, digit in enumerate(candidate):
-        # the multiplier alternates between 1 and 3
-        multiplier = 1 if index % 2 == 0 else 3
         # digit is a string, so convert to a number before multplying
-        total += int(digit) * multiplier
+        total += int(digit) * multiplier(index)
 
     # valid if cleanly divisible by 10
     return total % 10 == 0
