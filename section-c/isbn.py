@@ -56,8 +56,18 @@ Create a function that takes a string of numbers (possibly with an X at the end)
 """
 import pytest
 
-def is_valid_isbn10(candidate: str) -> bool:
-    return False
+def is_valid_isbn10(candidate: str, multiplier) -> bool:
+    # initialise digit sum counter
+    total = 0
+
+    # loop through the isbn digits
+    for index, digit in enumerate(candidate):
+        # digit is a string, so convert to a number before multplying
+        total += int(digit) * multiplier(index)
+
+    # valid if cleanly divisible by 10
+    return total % 10 == 0
+
 
 
 def is_valid_isbn13(candidate: str, multiplier) -> bool:
@@ -81,7 +91,10 @@ def isbn13(candidate: str):
 
         return "Valid" if is_valid_isbn13(candidate, multiplier) else "Invalid"
     elif len(candidate) == 10:
-        return "Valid" if is_valid_isbn10(candidate) else "Invalid"
+        # the multiplier starts at 9 and decreases
+        multiplier = lambda index: 10 - index
+
+        return "Valid" if is_valid_isbn10(candidate, multiplier) else "Invalid"
     else:
         raise Exception(f'Unexpected isbn length {len(candidate)}')
 
@@ -92,8 +105,10 @@ test_cases = [
     ("0316X6652X", "Invalid"),
     ("0330301824", "Invalid"),
     ("0345453747", "Invalid"),
+
     ("9780316066525", "Valid"),
     ("9780345453747", "Valid"),
+    ("9783866155237", "Valid"),
     ("9783876155237", "Invalid"),
 ]
 
