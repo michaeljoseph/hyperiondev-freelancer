@@ -62,6 +62,10 @@ def is_valid_isbn10(candidate: str, multiplier) -> bool:
 
     # loop through the isbn digits
     for index, digit in enumerate(candidate):
+        # handle trailing X digit
+        if digit == 'X':
+            digit = '10'
+
         # digit is a string, so convert to a number before multplying
         total += int(digit) * multiplier(index)
 
