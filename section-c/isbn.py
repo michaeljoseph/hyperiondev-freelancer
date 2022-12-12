@@ -90,6 +90,10 @@ def is_valid_isbn13(candidate: str, multiplier) -> bool:
     return total % 10 == 0
 
 
+def convert_isbn10(isbn10: str) -> str:
+    return f"987{isbn10}"
+
+
 def isbn(candidate: str):
     """Validate an isbn-10 or isbn-13 number"""
     if len(candidate) == 13:
@@ -101,7 +105,10 @@ def isbn(candidate: str):
         # the multiplier starts at 9 and decreases
         multiplier = lambda index: 10 - index
 
-        return "Valid" if is_valid_isbn10(candidate, multiplier) else "Invalid"
+        if is_valid_isbn10(candidate, multiplier):
+            return convert_isbn10(candidate)
+        else:
+            return "Invalid"
     else:
         raise Exception(f'Unexpected isbn length {len(candidate)}')
 
