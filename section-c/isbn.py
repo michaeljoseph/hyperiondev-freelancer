@@ -56,6 +56,10 @@ Create a function that takes a string of numbers (possibly with an X at the end)
 """
 import pytest
 
+def is_valid_isbn10(candidate: str) -> bool:
+    return False
+
+
 def is_valid_isbn13(candidate: str) -> bool:
     # initialise digit sum counter
     total = 0
@@ -68,14 +72,18 @@ def is_valid_isbn13(candidate: str) -> bool:
         total += int(digit) * multiplier
 
     # valid if cleanly divisible by 10
-    return "Valid" if total % 10 == 0 else "Invalid"
+    return total % 10 == 0
+
 
 def isbn13(candidate: str):
     """Validate an isbn-10 or isbn-13 number"""
     if len(candidate) == 13:
-        return is_valid_isbn13(candidate)
+        return "Valid" if is_valid_isbn13(candidate) else "Invalid"
+    elif len(candidate) == 10:
+        return "Valid" if is_valid_isbn10(candidate) else "Invalid"
+    else:
+        raise Exception(f'Unexpected isbn length {len(candidate)}')
 
-    return "Invalid"
 
 
 test_cases = [
