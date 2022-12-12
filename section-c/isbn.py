@@ -90,7 +90,7 @@ def is_valid_isbn13(candidate: str, multiplier) -> bool:
     return total % 10 == 0
 
 
-def isbn13(candidate: str):
+def isbn(candidate: str):
     """Validate an isbn-10 or isbn-13 number"""
     if len(candidate) == 13:
         # the multiplier alternates between 1 and 3
@@ -117,9 +117,13 @@ test_cases = [
     ("9780345453747", "Valid"),
     ("9783866155237", "Valid"),
     ("9783876155237", "Invalid"),
+
+    ("0316066524", "9780316066525"),
+    ("3866155239", "9783866155237"),
+    ("817450494X", "9788174504944"),
 ]
 
 
-@pytest.mark.parametrize("isbn, expected", test_cases)
-def test_isbn_validation(isbn, expected):
-    assert isbn13(isbn) == expected
+@pytest.mark.parametrize("candidate, expected", test_cases)
+def test_isbn_validation(candidate, expected):
+    assert isbn(candidate) == expected
