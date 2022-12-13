@@ -65,16 +65,15 @@ class InvalidIsbn(Exception):
 
 
 def is_valid_isbn(candidate: str) -> bool:
+    """Determine whether the given isbn number passes it's validity checksum"""
     isbn_length = len(candidate)
 
-    # (multiplier, modulus)
     multiplier = ISBN_10_MULTIPLIER if isbn_length == 10 else ISBN_13_MULTIPLIER
     modulus = 11 if isbn_length == 10 else 10
 
     # X is only valid for isbn-10 and only in the last position
     if -1 < candidate.find("X") < 9 and isbn_length == 10:
         return False
-        # raise InvalidIsbn(f"X is only valid for ISBN-10 and only in the last position ({candidate})")
 
     # convert string to a list of integers
     digits = [
@@ -92,6 +91,7 @@ def is_valid_isbn(candidate: str) -> bool:
 
 
 def convert_isbn10(isbn10: str) -> str:
+    """Convert an isbn-10 to an isbn-13"""
     isbn13 = f"978{isbn10}"
     isbn12 = isbn13[:-1]
     for check_digit in range(1, 9):
