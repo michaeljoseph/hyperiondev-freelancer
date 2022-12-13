@@ -93,13 +93,46 @@ def is_valid_isbn13(candidate: str, multiplier = ISBN_13_MULTIPLIER) -> bool:
     # valid if cleanly divisible by 10
     return total % 10 == 0
 
+class InvalidIsbn(Exception):
+    pass
+
+
+def is_valid_isbn(candidate: str) -> bool:
+    isbn_length = len(candidate)
+    if isbn_length not in [10, 13]:
+        return False
+        # raise InvalidIsbn(f"Invalid ISBN with length {isbn_length}")
+
+    # (multiplier, modulus)
+    multiplier = ISBN_10_MULTIPLIER if isbn_length == 10 else ISBN_13_MULTIPLIER
+    modulus = 11 if isbn_length == 10 else 10
+
+    # X is only valid for isbn-10 and only in the last position
+    if -1 < candidate.find("X") < 9 and isbn_length == 10:
+        return False
+        # raise InvalidIsbn(f"X is only valid for ISBN-10 and only in the last position ({candidate})")
+
+    # convert string to a list of integers
+    digits = [
+        # handle X for ISBN_10
+        10 if digit == "X" else int(digit)
+        for digit in candidate
+    ]
+
+    total = sum([
+        digit * multiplier(index)
+        for index, digit in enumerate(digits)
+    ])
+
+    return total % modulus == 0
+
 
 def convert_isbn10(isbn10: str) -> str:
     isbn13 = f"978{isbn10}"
     isbn12 = isbn13[:-1]
     for check_digit in range(1, 9):
         isbn13 = f"{isbn12}{check_digit}"
-        if is_valid_isbn13(isbn13):
+        if is_valid_isbn(isbn13):
             return isbn13
 
     raise Exception(f"Check digit not found for {isbn13}")
@@ -108,21 +141,14 @@ def convert_isbn10(isbn10: str) -> str:
 def isbn(candidate: str):
     """Validate an isbn-10 or isbn-13 number"""
     if len(candidate) == 13:
-        # the multiplier alternates between 1 and 3
-        multiplier = lambda index: 1 if index % 2 == 0 else 3
-
-        return "Valid" if is_valid_isbn13(candidate, multiplier) else "Invalid"
+        return "Valid" if is_valid_isbn(candidate) else "Invalid"
     elif len(candidate) == 10:
-        # the multiplier starts at 9 and decreases
-        multiplier = lambda index: 10 - index
-
-        if is_valid_isbn10(candidate, multiplier):
+        if is_valid_isbn(candidate):
             return convert_isbn10(candidate)
         else:
             return "Invalid"
     else:
-        raise Exception(f'Unexpected isbn length {len(candidate)}')
-
+        return "Invalid"
 
 
 test_cases = [
