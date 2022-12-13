@@ -3,3 +3,10 @@ test:
 
 watch:
     poetry run ptw isbn.py
+
+lint:
+    poetry run pre-commit run --files isbn.py
+
+fix:
+    poetry run black isbn.py
+    poetry run isort isbn.py
