@@ -66,9 +66,6 @@ class InvalidIsbn(Exception):
 
 def is_valid_isbn(candidate: str) -> bool:
     isbn_length = len(candidate)
-    if isbn_length not in [10, 13]:
-        return False
-        # raise InvalidIsbn(f"Invalid ISBN with length {isbn_length}")
 
     # (multiplier, modulus)
     multiplier = ISBN_10_MULTIPLIER if isbn_length == 10 else ISBN_13_MULTIPLIER
@@ -102,7 +99,7 @@ def convert_isbn10(isbn10: str) -> str:
         if is_valid_isbn(isbn13):
             return isbn13
 
-    raise Exception(f"Check digit not found for {isbn13}")
+    raise IsbnException(f"Conversion failed: validating check digit not found for {isbn13}")
 
 
 def isbn(candidate: str):
@@ -132,6 +129,8 @@ test_cases = [
     ("0316066524", "9780316066525"),
     ("3866155239", "9783866155237"),
     ("817450494X", "9788174504944"),
+
+    ("1", "Invalid")
 ]
 
 
