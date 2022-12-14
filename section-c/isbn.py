@@ -48,28 +48,33 @@ so that the resulting number passes the ISBN-13 check.
 
 ## Problem Statement
 
-Create a function that takes a string of numbers (possibly with an X at the end) and...
-
+Create a function that takes a string of numbers
+(possibly with an X at the end) and...
 - Return "Invalid" if it is not a valid ISBN-10 or ISBN-13.
 - Return "Valid" if it is a valid ISBN-13.
-- If it is a valid ISBN-10, convert it into an ISBN-13 and return the ISBN-13 number.
+- If it is a valid ISBN-10, convert it into an ISBN-13 and return
+  the ISBN-13 number.
 """
+
 import pytest
 
-ISBN_10_MULTIPLIER = lambda index: 10 - index
-ISBN_13_MULTIPLIER = lambda index: 1 if index % 2 == 0 else 3
+
+def isbn_multiplier(length, index):
+    """Return the appropriate validation multiplier based on length"""
+    if length == 10:
+        return 10 - index
+
+    return 1 if index % 2 == 0 else 3
 
 
-class InvalidIsbn(Exception):
-    pass
+def isbn_modulus(length):
+    """Return the appropriate validation modulus based on length"""
+    return 11 if length == 10 else 10
 
 
 def is_valid_isbn(candidate: str) -> bool:
     """Determine whether the given isbn number passes it's validity checksum"""
     isbn_length = len(candidate)
-
-    multiplier = ISBN_10_MULTIPLIER if isbn_length == 10 else ISBN_13_MULTIPLIER
-    modulus = 11 if isbn_length == 10 else 10
 
     # X is only valid for isbn-10 and only in the last position
     if -1 < candidate.find("X") < 9 and isbn_length == 10:
@@ -82,37 +87,39 @@ def is_valid_isbn(candidate: str) -> bool:
         for digit in candidate
     ]
 
-    total = sum([
-        digit * multiplier(index)
-        for index, digit in enumerate(digits)
-    ])
+    total = sum(
+        (
+            digit * isbn_multiplier(isbn_length, index)
+            for index, digit in enumerate(digits)
+        )
+    )
 
-    return total % modulus == 0
+    return total % isbn_modulus(isbn_length) == 0
 
 
 def convert_isbn10(isbn10: str) -> str:
     """Convert an isbn-10 to an isbn-13"""
-    isbn13 = f"978{isbn10}"
-    isbn12 = isbn13[:-1]
-    for check_digit in range(1, 9):
-        isbn13 = f"{isbn12}{check_digit}"
+    possible_isbns = (f"978{isbn10[:-1]}{check_digit}" for check_digit in range(1, 9))
+
+    for isbn13 in possible_isbns:
         if is_valid_isbn(isbn13):
             return isbn13
 
-    raise IsbnException(f"Conversion failed: validating check digit not found for {isbn13}")
+    return None
 
 
-def isbn(candidate: str):
+def validate_isbn(candidate: str) -> str:
     """Validate an isbn-10 or isbn-13 number"""
-    if len(candidate) == 13:
-        return "Valid" if is_valid_isbn(candidate) else "Invalid"
-    elif len(candidate) == 10:
-        if is_valid_isbn(candidate):
-            return convert_isbn10(candidate)
-        else:
-            return "Invalid"
-    else:
+    if not is_valid_isbn(candidate):
         return "Invalid"
+
+    if len(candidate) == 10:
+        isbn13 = convert_isbn10(candidate)
+        if not isbn13:
+            return "Invalid: isbn-10 conversion failed"
+        return isbn13
+
+    return "Valid"
 
 
 test_cases = [
@@ -120,20 +127,18 @@ test_cases = [
     ("0316X6652X", "Invalid"),
     ("0330301824", "Invalid"),
     ("0345453747", "Invalid"),
-
     ("9780316066525", "Valid"),
     ("9780345453747", "Valid"),
     ("9783866155237", "Valid"),
     ("9783876155237", "Invalid"),
-
     ("0316066524", "9780316066525"),
     ("3866155239", "9783866155237"),
     ("817450494X", "9788174504944"),
-
-    ("1", "Invalid")
+    ("1", "Invalid"),
 ]
 
 
 @pytest.mark.parametrize("candidate, expected", test_cases)
 def test_isbn_validation(candidate, expected):
-    assert isbn(candidate) == expected
+    """Test isbn validation"""
+    assert validate_isbn(candidate) == expected
