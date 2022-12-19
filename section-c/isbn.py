@@ -94,7 +94,6 @@ def is_valid_isbn(candidate: str) -> bool:
             for index, digit in enumerate(digits)
         )
     )
-
     return total % isbn_modulus(isbn_length) == 0
 
 
@@ -144,6 +143,7 @@ test_cases = [
     ("3866155239", "9783866155237"),
     ("817450494X", "9788174504944"),
     ("1", "Invalid"),
+    ("123", "Invalid"),
 ]
 
 
