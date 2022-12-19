@@ -55,6 +55,7 @@ Create a function that takes a string of numbers
 - If it is a valid ISBN-10, convert it into an ISBN-13 and return
   the ISBN-13 number.
 """
+import sys
 
 import pytest
 
@@ -121,6 +122,14 @@ def validate_isbn(candidate: str) -> str:
 
     return "Valid"
 
+
+def main(book_number):
+    """Main cli entrypoint"""
+    print(validate_isbn(book_number))
+
+
+if __name__ == "__main__":
+    main(sys.argv[1])
 
 test_cases = [
     ("031606652X", "Invalid"),
