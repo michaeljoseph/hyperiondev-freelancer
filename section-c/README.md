@@ -27,5 +27,5 @@ Available recipes:
     watch
 ```
 
-[poetry]: https://python-poetry.org/docs/#installation 
+[poetry]: https://python-poetry.org/docs/#installation
 [just]: https://github.com/casey/just#installation

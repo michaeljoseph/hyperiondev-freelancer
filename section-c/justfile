@@ -7,4 +7,4 @@ watch:
     poetry run ptw
 
 lint:
-    poetry run pre-commit run --files src
+    poetry run pre-commit run

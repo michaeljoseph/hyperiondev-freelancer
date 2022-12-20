@@ -1,9 +1,7 @@
-import os
-
-from eyesbeen import validate_isbn
-
+"""Test eyesbeen validation"""
 import pytest
 
+from eyesbeen import validate_isbn
 
 test_cases = [
     ("031606652X", "Invalid"),

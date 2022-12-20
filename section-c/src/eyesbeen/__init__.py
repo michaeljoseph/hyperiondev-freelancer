@@ -55,9 +55,6 @@ Create a function that takes a string of numbers
 - If it is a valid ISBN-10, convert it into an ISBN-13 and return
   the ISBN-13 number.
 """
-import os
-import sys
-from pathlib import Path
 
 
 def isbn_multiplier(length, index):
@@ -108,8 +105,7 @@ def convert_isbn10(isbn10: str) -> str:
         if is_valid_isbn(isbn13):
             return isbn13
 
-
-    return None # pragma: no cover
+    return None  # pragma: no cover
 
 
 def validate_isbn(candidate: str) -> str:
@@ -120,7 +116,7 @@ def validate_isbn(candidate: str) -> str:
     if len(candidate) == 10:
         isbn13 = convert_isbn10(candidate)
         if not isbn13:
-            return "Invalid: isbn-10 conversion failed" # pragma: no cover
+            return "Invalid: isbn-10 conversion failed"  # pragma: no cover
         return isbn13
 
     return "Valid"
