@@ -55,7 +55,9 @@ Create a function that takes a string of numbers
 - If it is a valid ISBN-10, convert it into an ISBN-13 and return
   the ISBN-13 number.
 """
+import os
 import sys
+from pathlib import Path
 
 import pytest
 
@@ -128,7 +130,11 @@ def main(book_number):
 
 
 if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        sys.exit(f"Usage: {Path(__file__).name} ISBN")
+
     main(sys.argv[1])
+
 
 test_cases = [
     ("031606652X", "Invalid"),
@@ -151,3 +157,12 @@ test_cases = [
 def test_isbn_validation(candidate, expected):
     """Test isbn validation"""
     assert validate_isbn(candidate) == expected
+
+
+def test_cli():
+    """Test command line interface"""
+    result = os.system("python isbn.py 9780316066525")
+    assert result == 0
+
+    result = os.system("python isbn.py")
+    assert result != 0
