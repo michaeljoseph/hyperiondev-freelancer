@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Michael Joseph <michaeljoseph+github@gmail.com>"]
 readme = "README.md"
-packages = [{ include = 'isbn.py' }]
+packages = [{ include = "eyesbeen", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -23,7 +23,8 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
-addopts = "--cov=isbn --cov-report=term-missing"
+addopts = "--cov=eyesbeen --cov-report=term-missing"
+pythonpath = ["src"]
 
 [tool.isort]
 profile = 'black'

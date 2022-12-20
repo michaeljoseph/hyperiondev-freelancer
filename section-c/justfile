@@ -1,10 +1,10 @@
 default: test lint
 
 test:
-    poetry run pytest isbn.py
+    poetry run pytest
 
 watch:
-    poetry run ptw isbn.py
+    poetry run ptw
 
 lint:
-    poetry run pre-commit run --files isbn.py
+    poetry run pre-commit run --files src
