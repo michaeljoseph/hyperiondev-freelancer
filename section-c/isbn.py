@@ -79,6 +79,9 @@ def is_valid_isbn(candidate: str) -> bool:
     """Determine whether the given isbn number passes it's validity checksum"""
     isbn_length = len(candidate)
 
+    if isbn_length not in [10, 13]:
+        return False
+
     # X is only valid for isbn-10 and only in the last position
     if -1 < candidate.find("X") < 9 and isbn_length == 10:
         return False
