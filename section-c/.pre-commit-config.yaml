@@ -34,4 +34,4 @@ repos:
         entry: pylint
         language: system
         types: [python]
-        args: ["-rn", "-sn"]
+        args: ["-rn", "-sn", "--no-docstring-rgx=test"]
