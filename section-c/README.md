@@ -21,7 +21,6 @@ Installing the current project: eyesbeen (0.1.0)
 
 🕙 2022-12-13 11:49:31  ❯ just -l
 Available recipes:
-    fix
     lint
     test
     watch

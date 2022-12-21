@@ -59,6 +59,7 @@ Create a function that takes a string of numbers
 
 def isbn_multiplier(length, index):
     """Return the appropriate validation multiplier based on length"""
+    assert length in (10, 13)
     if length == 10:
         return 10 - index
 
@@ -67,6 +68,7 @@ def isbn_multiplier(length, index):
 
 def isbn_modulus(length):
     """Return the appropriate validation modulus based on length"""
+    assert length in (10, 13)
     return 11 if length == 10 else 10
 
 
