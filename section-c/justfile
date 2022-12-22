@@ -8,3 +8,6 @@ watch:
 
 lint:
     poetry run pre-commit run
+
+serve:
+    poetry run uvicorn eyesbeen.api:app --reload
