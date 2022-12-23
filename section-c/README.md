@@ -26,5 +26,10 @@ Available recipes:
     watch
 ```
 
+## Demo
+
+https://eyesbeen.deta.dev/docs
+
+
 [poetry]: https://python-poetry.org/docs/#installation
 [just]: https://github.com/casey/just#installation

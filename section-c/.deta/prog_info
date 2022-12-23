@@ -1,0 +1,1 @@
+{"id":"ce22a4e1-f323-4aee-9991-f66a753a74f2","space":36460,"runtime":"python3.9","name":"eyesbeen","path":"p0ufkd","project":"a0y638a9","account":"144798365827","region":"eu-central-1","deps":["typer[all]==0.7.0","fastapi==0.88.0","httpx==0.23.1"],"envs":null,"public":true,"log_level":"debug","cron":""}
