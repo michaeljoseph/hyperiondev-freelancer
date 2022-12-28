@@ -11,3 +11,6 @@ lint:
 
 serve:
     poetry run uvicorn eyesbeen.api:app --reload
+
+build:
+    docker build -t eyesbeen.api .
