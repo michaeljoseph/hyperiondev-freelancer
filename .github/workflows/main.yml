@@ -58,6 +58,6 @@ jobs:
       - name: Build
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./section-c
           file: ./section-c/Dockerfile
           push: false
